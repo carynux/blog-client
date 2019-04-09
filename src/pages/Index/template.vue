@@ -1,6 +1,8 @@
 <template>
   <div id="index">
-    index
+    <p>index</p>
+    <el-button @click="onClick1">el-button</el-button>
+
   </div>
 </template>
 
