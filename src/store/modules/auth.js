@@ -4,7 +4,8 @@ const state = {
     isLogin:false
 }
 const getters = {
-
+    user:state => state.user,
+    isLogin: state => state.isLogin
 }
 
 const mutations = {
@@ -30,7 +31,12 @@ const actions = {
         commit('setLogin', {isLogin: true})
         return res.data
     },
-    async logout({commit,state}){
+    async logout({commit}){
+        await auth.logout()
+        commit('setUser',{user:null})
+        commit('setLogin',{isLogin:false})
+    },
+    async checkLogin({commit,state}){
         if(state.isLogin) return true
         let res = await auth.getInfo()
         commit('setLogin',{isLogin:res.isLogin})

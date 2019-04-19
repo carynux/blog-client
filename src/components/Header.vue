@@ -4,24 +4,48 @@
       <h1>Let's share</h1>
       <p>小伙伴们的博客</p>
       <div class="btns">
-        <el-button>立即登录</el-button>
-        <el-button>注册账号</el-button>
+        <router-link to="/login"><el-button>立即登录</el-button></router-link>
+        <router-link to="/register"><el-button>注册账号</el-button></router-link>
       </div>
     </template>
     <template v-if="isLogin">
       <h1><router-link to="/">Let's share</router-link></h1>
-      <i class="edit el-icon-plus"></i>
-      <img class="avatar" src="http://cn.gravatar.com/avatar/1?s=128&d=identicon">
+      <router-link to="/create"><i class="edit el-icon-plus"></i></router-link>
+      <div class="user">
+        <img class="avatar" :src="user.avatar" :alt="user.username" :title="user.username">
+        <ul>
+          <li><router-link to="/my">我的</router-link></li>
+          <li><a href="#" @click="onLogout">注销</a></li>
+        </ul>
+      </div>         
     </template>
     
   </header>
 </template>
 
 <script>
+import { mapGetters , mapActions } from 'vuex'
 export default {
   data() {
     return {
-      isLogin:true
+    }
+  },
+  computed:{
+    ...mapGetters([
+      'user',
+      'isLogin'
+    ])
+  },
+  created(){
+    this.checkLogin()
+  },
+  methods:{
+    ...mapActions([
+       'checkLogin',
+       'logout'
+    ]),
+    onLogout() {
+      this.logout()
     }
   }
 }
