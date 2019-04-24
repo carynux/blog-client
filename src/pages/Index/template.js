@@ -1,16 +1,18 @@
-import request from '@/helpers/request.js'
-import auth from '@/api/auth.js'
-window.request = request
+import blog from '@/api/blog.js'
 
 export default {
-    name: 'login',
-    props: {
-      msg: String
+    data() {
+      return{
+        blogs:[]
+      }
+    },
+    creeated() {
+      blog.getIndexBlogs().then(res => {
+        this.blogs = res.data
+      })
     },
     methods:{
-      onClick1() {
-        this.$message.error('这是一条错误信息')
-      }
+      
     }
 
   }
